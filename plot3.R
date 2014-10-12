@@ -1,13 +1,16 @@
-#load data:
+#Load data:
 allData <- read.csv("household_power_consumption.txt", header=TRUE,sep=";",na.strings = "?")
-#convert to date and time:
+
+#Convert required vars to date and time:
 allData$Date <- as.Date(allData$Date, format="%d/%m/%Y", tz="UTC")
 allData$Time <- strptime(allData$Time, format="%H:%M:%S", tz="UTC")
-#subset to our region
+
+#Subset to our region
 myData <- allData[(allData$Date >= as.Date("2007-02-01", format="%Y-%m-%d")) & 
                   (allData$Date <= as.Date("2007-02-02", format="%Y-%m-%d")),  ]
 
 
+#Plot required chart:
 png("plot3.png")
 
 plot(myData$Sub_metering_1 ,type="l" , xaxt="n", 

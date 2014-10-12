@@ -1,12 +1,16 @@
-#load data:
+#Load data:
 allData <- read.csv("household_power_consumption.txt", header=TRUE,sep=";",na.strings = "?")
-#convert to date and time:
+
+#Convert required vars to date and time:
 allData$Date <- as.Date(allData$Date, format="%d/%m/%Y", tz="UTC")
 allData$Time <- strptime(allData$Time, format="%H:%M:%S", tz="UTC")
-#subset to our region
+
+#Subset to our region
 myData <- allData[(allData$Date >= as.Date("2007-02-01", format="%Y-%m-%d")) & 
                   (allData$Date <= as.Date("2007-02-02", format="%Y-%m-%d")),  ]
 
+
+#Plot required charts:
 
 png("plot4.png")
 par(mfrow=c(2,2))
@@ -38,8 +42,6 @@ plot(myData$Global_reactive_power ,type="l" , xaxt="n",
      xlab="datetime", ylab="Global_reactive_power")
 axis(1, at=c(0,nrow(myData) %/% 2,nrow(myData)), 
      labels=weekdays(c(myData$Date[1], myData$Date[nrow(myData) %/% 2+1], myData$Date[nrow(myData)] + 1),abbreviate=TRUE))
-
-
 
 
 dev.off()
